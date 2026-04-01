@@ -1,14 +1,764 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+  <title>BRICKERS COFFEE</title>
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --bg-soft: #efe7dc;
+      --text: #171717;
+      --muted: #6d655d;
+      --line: rgba(23, 23, 23, 0.12);
+      --white: #ffffff;
+      --dark: #111111;
+      --accent: #9b6038;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .container {
+      width: min(1400px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* 움직이는 상단 바 */
+    .announcement {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      color: #fff;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 1100;
+    }
+
+    .announcement-track {
+      display: inline-block;
+      padding: 10px 0;
+      min-width: 200%;
+      animation: marquee 22s linear infinite;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .header {
+      position: fixed;
+      top: 41px;
+      left: 0;
+      width: 100%;
+      background: rgba(246, 241, 234, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      z-index: 1000;
+    }
+
+    .header-inner {
+      width: min(1400px, calc(100% - 48px));
+      height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      font-size: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: 0.2s;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 181px 0 56px;
+      color: var(--white);
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.12) 100%),
+        url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1800&q=80") center center / cover no-repeat;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 18px;
+      opacity: 0.9;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 9vw, 116px);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      max-width: 980px;
+    }
+
+    .hero p {
+      margin-top: 24px;
+      max-width: 640px;
+      font-size: 18px;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .hero-buttons {
+      margin-top: 34px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      min-width: 160px;
+      border: 1px solid rgba(255,255,255,0.28);
+      color: var(--white);
+      font-weight: 700;
+      transition: 0.25s;
+    }
+
+    .btn:hover {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .btn.fill {
+      background: var(--white);
+      color: var(--dark);
+    }
+
+    .btn.fill:hover {
+      background: transparent;
+      color: var(--white);
+    }
+
+    section {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: clamp(34px, 5vw, 72px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 520px;
+      justify-self: end;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      min-height: 430px;
+    }
+
+    .panel-text {
+      padding: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .panel-text h3 {
+      font-size: 38px;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .panel-text p {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 560px;
+    }
+
+    .stats {
+      margin-top: 34px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stats div strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .stats div span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-image {
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .card-body {
+      padding: 28px;
+    }
+
+    .card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .dark-section {
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    .dark-section .section-label,
+    .dark-section .section-desc {
+      color: rgba(255,255,255,0.68);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 24px;
+    }
+
+    .story-box {
+      min-height: 430px;
+      border: 1px solid rgba(255,255,255,0.14);
+      padding: 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .story-box h3 {
+      font-size: clamp(34px, 4.5vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      max-width: 720px;
+    }
+
+    .story-box p {
+      color: rgba(255,255,255,0.7);
+      max-width: 520px;
+    }
+
+    .story-image {
+      min-height: 430px;
+      border: 1px solid rgba(255,255,255,0.14);
+      overflow: hidden;
+    }
+
+    .visit-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+    }
+
+    .visit-card {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 38px;
+      min-height: 420px;
+    }
+
+    .visit-card h3 {
+      font-size: 42px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      margin-bottom: 22px;
+    }
+
+    .visit-item {
+      border-top: 1px solid var(--line);
+      padding: 18px 0;
+    }
+
+    .visit-item strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .visit-item span {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .visit-image {
+      min-height: 420px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      position: relative;
+    }
+
+    .visit-image::after {
+      content: "BRICKERS COFFEE";
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      background: rgba(255,255,255,0.92);
+      color: var(--dark);
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .footer {
+      background: var(--bg-soft);
+      padding: 46px 0 52px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .footer p {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .footer-menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 22px;
+      font-size: 13px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    @media (max-width: 1080px) {
+      .section-head,
+      .about-grid,
+      .story-grid,
+      .visit-grid,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .section-desc {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .header-inner {
+        height: auto;
+        padding: 18px 0;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .container {
+        width: min(100% - 28px, 1400px);
+      }
+
+      .hero {
+        padding: 201px 0 44px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      section {
+        padding: 86px 0;
+      }
+
+      .panel-text,
+      .story-box,
+      .visit-card {
+        padding: 28px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+  <div class="announcement">
+    <div class="announcement-track">
+      BRICKERS COFFEE · 공간을 넘어 커피를 · SPECIALTY COFFEE · BAKERY · ROASTING · DAILY EXPERIENCE ·
+      BRICKERS COFFEE · 공간을 넘어 커피를 · SPECIALTY COFFEE · BAKERY · ROASTING · DAILY EXPERIENCE ·
+      BRICKERS COFFEE · 공간을 넘어 커피를 · SPECIALTY COFFEE · BAKERY · ROASTING · DAILY EXPERIENCE ·
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="#home" class="logo">BRICKERS COFFEE</a>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#story">Story</a>
+        <a href="#visit">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Coffee · Space · Bakery</div>
+        <h1>공간을 넘어<br>커피를</h1>
+        <p>
+          브릭커스커피는 좋은 공간 안에서 진정성 있는 커피와 베이커리를 제안합니다.
+          한 잔의 맛과 머무는 시간, 그리고 그 공간에 쌓이는 감각까지 함께 설계합니다.
+        </p>
+        <div class="hero-buttons">
+          <a href="#about" class="btn fill">브랜드 보기</a>
+          <a href="#visit" class="btn">매장 안내</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-label">About Brickers</div>
+            <h2 class="section-title">매일의 커피를<br>더 깊은 경험으로</h2>
+          </div>
+          <p class="section-desc">
+            브릭커스커피는 단순한 카페가 아니라, 로스팅과 메뉴, 공간과 분위기,
+            그리고 지역 안에서의 브랜드 감도를 함께 담아내는 공간을 지향합니다.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <article class="panel panel-text">
+            <div>
+              <h3>좋은 공간에는<br>좋은 커피가 필요합니다.</h3>
+              <p>
+                브릭커스커피는 직접 준비한 커피와 정성스럽게 만든 메뉴,
+                그리고 오래 머물고 싶은 공간의 결을 함께 고민합니다.
+                빠르게 소비되는 매장보다 기억에 남는 장면을 만드는 브랜드를 목표로 합니다.
+              </p>
+            </div>
+
+            <div class="stats">
+              <div>
+                <strong>Keyword</strong>
+                <span>Space & Coffee</span>
+              </div>
+              <div>
+                <strong>Focus</strong>
+                <span>Roasting · Bakery · Mood</span>
+              </div>
+              <div>
+                <strong>Direction</strong>
+                <span>Local & Genuine Experience</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="panel">
+            <img src="hall.jpg" alt="브릭커스 커피 공간 이미지">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-label">Experience</div>
+            <h2 class="section-title">브릭커스가 만드는<br>세 가지 장면</h2>
+          </div>
+          <p class="section-desc">
+            커피, 베이커리, 공간은 각각 따로 존재하지 않습니다.
+            브릭커스에서는 이 세 가지가 연결되어 하나의 브랜드 경험이 됩니다.
+          </p>
+        </div>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=80" alt="커피 이미지">
+            </div>
+            <div class="card-body">
+              <div class="card-label">Coffee</div>
+              <h3>한 잔의 밸런스를<br>정교하게</h3>
+              <p>
+                에스프레소와 브루잉, 시즌 메뉴까지 브릭커스만의 방향성과 맛의 인상을 담아냅니다.
+                선명하면서도 편안하게, 매일 찾을 수 있는 커피를 지향합니다.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80" alt="베이커리 이미지">
+            </div>
+            <div class="card-body">
+              <div class="card-label">Bakery</div>
+              <h3>커피와 가장 잘 어울리는<br>베이커리</h3>
+              <p>
+                단순히 곁들이는 디저트가 아니라,
+                커피와 함께 완성되는 맛의 경험을 고민합니다.
+                매장 성격에 맞는 베이커리 구성을 통해 브랜드의 결을 더합니다.
+              </p>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image">
+              <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80" alt="카페 공간 이미지">
+            </div>
+            <div class="card-body">
+              <div class="card-label">Space</div>
+              <h3>머무는 시간이<br>브랜드가 되도록</h3>
+              <p>
+                브릭커스는 좌석, 동선, 조도, 오브제까지
+                공간 전체가 하나의 인상을 만들도록 설계합니다.
+                편안하지만 평범하지 않은 분위기를 추구합니다.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="dark-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-label">Brand Story</div>
+            <h2 class="section-title">맛과 공간이 쌓여<br>브랜드가 됩니다</h2>
+          </div>
+          <p class="section-desc">
+            브릭커스커피는 좋은 재료와 좋은 기술, 그리고 좋은 공간 경험이
+            결국 사람들의 기억 속에 오래 남는다고 믿습니다.
+          </p>
+        </div>
+
+        <div class="story-grid">
+          <article class="story-box">
+            <h3>매일 반복되는 한 잔이 아니라, 다시 찾고 싶어지는 장면을 만듭니다.</h3>
+            <p>
+              커피의 맛은 물론, 공간의 온도와 서비스의 태도,
+              그리고 브랜드가 전하는 메시지까지 함께 쌓이며 브릭커스의 인상이 만들어집니다.
+            </p>
+          </article>
+
+          <div class="story-image">
+            <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80" alt="브릭커스 분위기 이미지">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="visit">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-label">Visit</div>
+            <h2 class="section-title">브릭커스커피를<br>경험해보세요</h2>
+          </div>
+          <p class="section-desc">
+            아래 내용은 예시 형식입니다.
+            실제 주소, 운영시간, 인스타그램, 연락처에 맞게 수정해서 바로 사용할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="visit-grid">
+          <article class="visit-card">
+            <h3>BRICKERS<br>COFFEE</h3>
+
+            <div class="visit-item">
+              <strong>Address</strong>
+              <span>경상남도 창원시 의창구 중동북로23, 교육동 101호 BRICKERS COFFEE</span>
+            </div>
+
+            <div class="visit-item">
+              <strong>Hour</strong>
+              <span> 매일 10:00 - 22:00 (정기 휴무 / 매월 두번째 월요일)</span>
+            </div>
+
+            <div class="visit-item">
+              <strong>Contact</strong>
+              <span>055-253-8294</span>
+            </div>
+
+            <div class="visit-item">
+              <strong>Instagram</strong>
+              <span>@brickerscoffee</span>
+            </div>
+          </article>
+
+          <div class="visit-image">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=80" alt="브릭커스 방문 이미지">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-logo">BRICKERS COFFEE</div>
+        <p>
+          공간을 넘어 커피를.<br>
+          좋은 공간에서 진정성 있는 커피 경험을 제안하는 브랜드.
+        </p>
+      </div>
+
+      <div class="footer-menu">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#story">Story</a>
+        <a href="#visit">Visit</a>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
