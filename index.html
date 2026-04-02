@@ -188,47 +188,54 @@
       </div>
     </section>
 
-    <section id="visit">
+    <section id="contact">
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="section-label">Visit</div>
-            <h2 class="section-title">브릭커스커피를<br>경험해보세요</h2>
+            <div class="section-label">Partnership</div>
+            <h2 class="section-title">비즈니스 제휴 및<br>원두 납품 문의</h2>
           </div>
           <p class="section-desc">
-            아래 내용은 예시 형식입니다.
-            실제 주소, 운영시간, 인스타그램, 연락처에 맞게 수정해서 바로 사용할 수 있습니다.
+            브릭커스커피와 함께 성장할 파트너를 기다립니다.
+            원두 납품, 창업 상담 등 문의 내용을 남겨주시면 담당자가 연락드리겠습니다.
           </p>
         </div>
 
-        <div class="visit-grid">
-          <article class="visit-card">
-            <h3>BRICKERS<br>COFFEE</h3>
-
-            <div class="visit-item">
-              <strong>Address</strong>
-              <span>경상남도 창원시 의창구 중동북로23, 교육동 101호 BRICKERS COFFEE</span>
+        <div class="contact-wrapper">
+          <form action="https://formspree.io/f/xykbdglj" method="POST" class="contact-form">
+            <div class="form-group">
+              <label for="name">성함 / 업체명</label>
+              <input type="text" id="name" name="name" placeholder="이름 또는 업체명을 입력해주세요" required>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">이메일 주소</label>
+                <input type="email" id="email" name="_replyto" placeholder="example@email.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">연락처</label>
+                <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+              </div>
             </div>
 
-            <div class="visit-item">
-              <strong>Hour</strong>
-              <span> 매일 10:00 - 22:00 (정기 휴무 / 매월 두번째 월요일)</span>
+            <div class="form-group">
+              <label for="type">문의 유형</label>
+              <select id="type" name="type" required>
+                <option value="" disabled selected>문의 유형을 선택해주세요</option>
+                <option value="원두 납품">원두 납품 문의</option>
+                <option value="창업 상담">창업/가맹 상담</option>
+                <option value="기타 제휴">기타 비즈니스 제휴</option>
+              </select>
             </div>
 
-            <div class="visit-item">
-              <strong>Contact</strong>
-              <span>055-253-8294</span>
+            <div class="form-group">
+              <label for="message">문의 내용</label>
+              <textarea id="message" name="message" rows="5" placeholder="상세한 문의 내용을 입력해주세요" required></textarea>
             </div>
 
-            <div class="visit-item">
-              <strong>Instagram</strong>
-              <span>@brickerscoffee</span>
-            </div>
-          </article>
-
-          <div class="visit-image">
-            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1400&q=80" alt="브릭커스 방문 이미지">
-          </div>
+            <button type="submit" class="btn fill submit-btn">문의하기</button>
+          </form>
         </div>
       </div>
     </section>
@@ -249,6 +256,7 @@
         <a href="#experience">Experience</a>
         <a href="#story">Story</a>
         <a href="#visit">Visit</a>
+        <a href="#contact">Contact</a>
       </div>
     </div>
   </footer>
